@@ -50,3 +50,26 @@ function http_post_json($url, $data){
   $res = curl_exec($curl);
   return  $res;
 }
+
+
+//传输json数据使用
+function http_post_json($url, $data){
+   $curl = curl_init();
+  curl_setopt($curl, CURLOPT_URL, $url);
+  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+
+  curl_setopt($curl, CURLOPT_POST, 1);
+  curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+  curl_setopt($curl, CURLOPT_HEADER, 0);
+  curl_setopt($curl, CURLOPT_HTTPHEADER,
+        array(
+                'Content-Type: application/json; charset=utf-8',
+                  'x-access-token:' . $token,
+                'Content-Length:' . strlen($data))
+        );
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+  $res = curl_exec($curl);
+  return  $res;
+}
+
